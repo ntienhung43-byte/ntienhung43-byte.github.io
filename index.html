@@ -3,15 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="học,chơi,thử code,thông tin,infomation">
-  <title>Trang web đầu tiên của tôi</title>
+  <title>Đếm ngược TSA 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 25px 15px;
+      border-radius: 15px;
+      min-width: 70px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      perspective: 1000px;
+    }
+
+    .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .number.flip {
+      transform: rotateX(180deg);
+    }
+
+    .label {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #e0e0e0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
-  <h1>trời ơi bao giờ mới viết xong day hả trời</h1>
-  <p>nhưng chắc cũng nhanh thôi=))</p>
-  <h2>Tôi sẽ thử một bức hình ở dưới đây xxem cso được không nhé</h2>
-  <img src="hungsieudeptrai.jpg" alt="ảnh của Hưng">
-<body>
+  <div class="container">
+    <h1>Đếm ngược TSA 2026 - Ngày 24/01/2026</h1>
+    <div class="countdown">
+      <div class="time-box">
+        <div class="number" id="months">00</div>
+        <div class="label">Tháng</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="days">00</div>
+        <div class="label">Ngày</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="hours">00</div>
+        <div class="label">Giờ</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="minutes">00</div>
+        <div class="label">Phút</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="seconds">00</div>
+        <div class="label">Giây</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const targetDate = new Date("2026-01-24T00:00:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      let diff = targetDate - now;
+
+      if (diff < 0) diff = 0;
+
+      const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const updateFlip = (id, value) => {
+        const el = document.getElementById(id);
+        if(el.innerText !== value.toString().padStart(2, '0')){
+          el.classList.add('flip');
+          setTimeout(() => {
+            el.innerText = value.toString().padStart(2, '0');
+            el.classList.remove('flip');
+          }, 150);
+        }
+      };
+
+      updateFlip("months", months);
+      updateFlip("days", days);
+      updateFlip("hours", hours);
+      updateFlip("minutes", minutes);
+      updateFlip("seconds", seconds);
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
 </html>
-
-
