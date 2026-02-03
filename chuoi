@@ -1,0 +1,76 @@
+import { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Flame } from "lucide-react";
+import { motion } from "framer-motion";
+
+// ====== GIẢ LẬP LƯU ONLINE ======
+// Sau này thay bằng Firebase / Supabase
+const STORAGE_KEY = "my-learning-streak";
+
+export default function LearningStreakApp() {
+  const [days, setDays] = useState(0);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) setDays(Number(saved));
+  }, []);
+
+  const tickToday = () => {
+    const newDays = days + 1;
+    setDays(newDays);
+    localStorage.setItem(STORAGE_KEY, newDays);
+  };
+
+  const milestones = [10, 50, 100, 200, 300];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center justify-center p-6">
+      <Card className="w-full max-w-md rounded-2xl shadow-2xl bg-black/60 text-white">
+        <CardContent className="p-6 space-y-6">
+          <motion.h1
+            className="text-2xl font-bold text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            🔥 Chuỗi học tập của tôi
+          </motion.h1>
+
+          <div className="text-center space-y-2">
+            <p className="text-lg">Bạn đã học liên tục</p>
+            <motion.div
+              key={days}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-5xl font-extrabold text-orange-400"
+            >
+              {days} ngày
+            </motion.div>
+          </div>
+
+          <Button
+            onClick={tickToday}
+            className="w-full text-lg py-6 rounded-xl"
+          >
+            <CheckCircle className="mr-2" /> Hoàn thành hôm nay
+          </Button>
+
+          <div className="space-y-3">
+            {milestones.map((m) => (
+              <motion.div
+                key={m}
+                className={`p-3 rounded-xl flex items-center justify-between ${
+                  days >= m ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-black" : "bg-white/10"
+                }`}
+                animate={days >= m ? { scale: [1, 1.05, 1] } : {}}
+              >
+                <span>Mốc {m} ngày</span>
+                {days >= m && <Flame />}
+              </motion.div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
